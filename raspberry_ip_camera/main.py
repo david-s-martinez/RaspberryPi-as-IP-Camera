@@ -13,6 +13,7 @@ app = Flask(__name__)
 def generate_frames(camera):
     while True:
         frame=camera.get_frame()
+        cv2.imshow('win', camera.frame)
         yield(b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
@@ -21,4 +22,5 @@ def video():
     return Response(generate_frames(camera),mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__=="__main__":
+    cv2.namedWindow('win')
     app.run(host='0.0.0.0',debug=False)

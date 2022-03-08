@@ -13,6 +13,8 @@ class VideoCamera(object):
         self.stream.stop()
 
     def get_frame(self):
-        frame = self.stream.read()
-        ret, jpeg = cv2.imencode('.jpg', frame)
+        self.frame = self.stream.read()
+        ret, jpeg = cv2.imencode('.jpg', self.frame)
         return jpeg.tobytes()
+    def get_frame_raw(self):
+        return self.frame
